@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juego de Arrastre - Ciclo del Agua</title>
+
+<style>
+
+body{
+    font-family:Arial, sans-serif;
+    text-align:center;
+    background:linear-gradient(to right,#4fc3f7,#81d4fa);
+    margin:0;
+    padding:20px;
+}
+
+.contenedor{
+    max-width:900px;
+    margin:auto;
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 0 15px rgba(0,0,0,0.2);
+}
+
+h1{
+    color:#0277bd;
+}
+
+.frase{
+    font-size:24px;
+    margin:30px 0;
+}
+
+.espacio{
+    display:inline-block;
+    width:180px;
+    height:45px;
+    border:3px dashed #2196f3;
+    border-radius:10px;
+    vertical-align:middle;
+    background:#f5f5f5;
+}
+
+.palabras{
+    margin-top:30px;
+}
+
+.palabra{
+    display:inline-block;
+    padding:12px 20px;
+    margin:10px;
+    background:#ffeb3b;
+    border-radius:10px;
+    cursor:grab;
+    font-weight:bold;
+    font-size:20px;
+}
+
+.correcto{
+    background:#81c784 !important;
+}
+
+button{
+    margin-top:25px;
+    padding:15px 25px;
+    font-size:18px;
+    border:none;
+    border-radius:10px;
+    background:#4caf50;
+    color:white;
+    cursor:pointer;
+}
+
+</style>
+</head>
+<body>
+
+<div class="contenedor">
+
+<h1>💧 Arrastra la palabra correcta 💧</h1>
+
+<div class="frase">
+Cuando el agua se transforma en vapor, ocurre la
+<div class="espacio" data-respuesta="evaporación"></div>.
+</div>
+
+<div class="frase">
+Cuando se forman las nubes, ocurre la
+<div class="espacio" data-respuesta="condensación"></div>.
+</div>
+
+<div class="frase">
+Cuando cae lluvia, nieve o granizo, ocurre la
+<div class="espacio" data-respuesta="precipitación"></div>.
+</div>
+
+<div class="palabras">
+
+<div class="palabra" draggable="true" id="evaporación">
+evaporación
+</div>
+
+<div class="palabra" draggable="true" id="precipitación">
+precipitación
+</div>
+
+<div class="palabra" draggable="true" id="condensación">
+condensación
+</div>
+
+</div>
+
+<button onclick="revisar()">
+✅ Revisar respuestas
+</button>
+
+<h2 id="resultado"></h2>
+
+</div>
+
+<script>
+
+const palabras =
+document.querySelectorAll(".palabra");
+
+const espacios =
+document.querySelectorAll(".espacio");
+
+palabras.forEach(palabra=>{
+
+    palabra.addEventListener("dragstart",e=>{
+        e.dataTransfer.setData(
+            "text",
+            palabra.id
+        );
+    });
+
+});
+
+espacios.forEach(espacio=>{
+
+    espacio.addEventListener("dragover",e=>{
+        e.preventDefault();
+    });
+
+    espacio.addEventListener("drop",e=>{
+        e.preventDefault();
+
+        const id =
+        e.dataTransfer.getData("text");
+
+        espacio.textContent = id;
+        espacio.dataset.usuario = id;
+    });
+
+});
+
+function revisar(){
+
+    let correctas = 0;
+
+    espacios.forEach(espacio=>{
+
+        if(
+            espacio.dataset.usuario ===
+            espacio.dataset.respuesta
+        ){
+            espacio.classList.add("correcto");
+            correctas++;
+        }
+
+    });
+
+    document.getElementById("resultado").innerHTML =
+    "🏆 Acertaste " + correctas + " de 3 respuestas.";
+
+    const voz =
+    new SpeechSynthesisUtterance(
+        "Felicitaciones. Acertaste " +
+        correctas +
+        " de 3 respuestas."
+    );
+
+    voz.lang = "es-CL";
+
+    speechSynthesis.speak(voz);
+
+}
+
+</script>
+
+</body>
+</html>

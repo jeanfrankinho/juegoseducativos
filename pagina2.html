@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Juego Matemático</title>
+
+<!-- favicon -->
+<link rel="icon"
+href="https://cdn-icons-png.flaticon.com/512/861/861512.png">
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background-image:url(img/fondo\ juego.jpg);
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+
+    text-align:center;
+    overflow-x:hidden;
+}
+
+.contenedor{
+    width:90%;
+    max-width:1000px;
+    margin:30px auto;
+
+    background:linear-gradient(
+    135deg,
+    #000000,
+    #ff0000,
+    #ff0000,
+    #919191,
+    #000000
+    );
+
+    background-size:400% 400%;
+
+    animation:fondoAnimado 8s ease infinite;
+
+    padding:30px;
+
+    border-radius:30px;
+
+    border:8px solid white;
+
+    box-shadow:0 0 30px rgba(0,0,0,0.5);
+}
+
+h1{
+    color:#ff0000;
+    font-size:45px;
+}
+
+.imagen-principal{
+    width:220px;
+    margin:20px;
+}
+
+.numeros{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+    margin-top:30px;
+}
+
+.numero{
+    width:100px;
+    height:100px;
+    background:#4caf50;
+    color:white;
+    font-size:50px;
+    font-weight:bold;
+    border-radius:15px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    cursor:grab;
+    transition:0.3s;
+}
+
+.numero:hover{
+    transform:scale(1.1);
+}
+
+.zona{
+    width:250px;
+    height:180px;
+    border:4px solid #90a4ae;
+    margin:40px auto;
+    border-radius:20px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:30px;
+    font-weight:bold;
+
+    background:#eceff1;
+    color:#37474f;
+
+    box-shadow:0 0 15px rgba(0,0,0,0.2);
+
+    transition:0.3s;
+}
+
+.correcto{
+    background:#8cff8c;
+    border-color:green;
+}
+
+.incorrecto{
+    background:#ff9d9d;
+    border-color:red;
+}
+
+button{
+    padding:15px 30px;
+    border:none;
+    border-radius:15px;
+    background:#007bff;
+    color:white;
+    font-size:20px;
+    cursor:pointer;
+    margin:10px;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+#mensaje{
+    font-size:30px;
+    margin-top:20px;
+    font-weight:bold;
+}
+
+.estrella{
+    position:fixed;
+    top:-50px;
+    font-size:40px;
+    animation:caer linear forwards;
+    z-index:9999;
+}
+.serpentina{
+    position:fixed;
+    width:15px;
+    height:80px;
+    top:-100px;
+    border-radius:10px;
+    animation:caerSerpentina linear forwards;
+    z-index:9999;
+}
+
+.felicitacion{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background:#ffeb3b;
+    color:#ff0000;
+    padding:25px 50px;
+    border-radius:30px;
+    font-size:45px;
+    font-weight:bold;
+    z-index:10000;
+    box-shadow:0 0 20px rgba(0,0,0,0.4);
+    animation:zoom 0.6s infinite alternate;
+}
+
+@keyframes caerSerpentina{
+
+    to{
+        transform:translateY(120vh)
+        rotate(720deg);
+    }
+
+}
+
+@keyframes zoom{
+
+    from{
+        transform:translate(-50%,-50%) scale(1);
+    }
+
+    to{
+        transform:translate(-50%,-50%) scale(1.1);
+    }
+
+}
+@keyframes caer{
+
+    to{
+        transform:translateY(110vh)
+        rotate(360deg);
+    }
+
+}
+@keyframes fondoAnimado{
+
+    0%{
+        background-position:0% 50%;
+    }
+
+    50%{
+        background-position:100% 50%;
+    }
+
+    100%{
+        background-position:0% 50%;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="contenedor">
+
+<h1>🎮 Juguemos a contar</h1>
+
+<img src="https://cdn-icons-png.flaticon.com/512/415/415733.png"
+class="imagen-principal">
+
+<h2>Arrastra el número correcto</h2>
+
+<h1>🍎 🍎 🍎</h1>
+
+<!-- números -->
+<div class="numeros">
+
+    <div class="numero"
+        draggable="true"
+        id="1">
+        1
+    </div>
+
+    <div class="numero"
+        draggable="true"
+        id="2">
+        2
+    </div>
+
+    <div class="numero"
+        draggable="true"
+        id="3">
+        3
+    </div>
+
+    <div class="numero"
+        draggable="true"
+        id="4">
+        4
+    </div>
+
+    <div class="numero"
+        draggable="true"
+        id="5">
+        5
+    </div>
+
+    <div class="numero"
+        draggable="true"
+        id="6">
+        6
+    </div>
+
+    <div class="numero"
+        draggable="true"
+        id="7">
+        7
+    </div>
+
+    <div class="numero"
+        draggable="true"
+        id="8">
+        8
+    </div>
+
+    <div class="numero"
+        draggable="true"
+        id="9">
+        9
+    </div>
+
+    <div class="numero"
+        draggable="true"
+        id="10">
+        10
+    </div>
+
+</div>
+
+<!-- zona -->
+<div class="zona" id="zona">
+
+    Suelta aquí
+
+</div>
+
+<div id="mensaje"></div>
+
+
+
+<button onclick="siguienteNivel()">
+➡ Siguiente nivel
+</button>
+
+</div>
+
+<script>
+
+let nivel = 0;
+
+let correctas = 0;
+
+let incorrectas = 0;
+
+const niveles = [
+
+    {
+        objetos:"🍎 🍎 🍎",
+        respuesta:"3"
+    },
+
+    {
+        objetos:"🍌 🍌 🍌 🍌 🍌",
+        respuesta:"5"
+    },
+
+    {
+        objetos:"🍓 🍓",
+        respuesta:"2"
+    },
+
+    {
+        objetos:"🍉 🍉 🍉 🍉 🍉 🍉",
+        respuesta:"6"
+    },
+
+    {
+        objetos:"🍪 🍪 🍪 🍪",
+        respuesta:"4"
+    },
+
+    {
+        objetos:"⚽ ⚽ ⚽ ⚽ ⚽ ⚽ ⚽",
+        respuesta:"7"
+    },
+
+    {
+        objetos:"🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗",
+        respuesta:"8"
+    },
+
+    {
+        objetos:"⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐",
+        respuesta:"9"
+    },
+
+    {
+        objetos:"🎈 🎈 🎈 🎈 🎈 🎈 🎈 🎈 🎈 🎈",
+        respuesta:"10"
+    }
+
+];
+
+const numeros =
+document.querySelectorAll(".numero");
+
+const zona =
+document.getElementById("zona");
+
+// arrastrar
+numeros.forEach(numero => {
+
+    numero.addEventListener(
+        "dragstart",
+        (e)=>{
+
+            e.dataTransfer.setData(
+                "text",
+                e.target.id
+            );
+
+        }
+
+    );
+
+});
+
+// permitir soltar
+zona.addEventListener(
+    "dragover",
+    (e)=>{
+
+        e.preventDefault();
+
+    }
+
+);
+
+// soltar
+zona.addEventListener(
+    "drop",
+    (e)=>{
+
+        e.preventDefault();
+
+        let numero =
+        e.dataTransfer.getData(
+            "text"
+        );
+
+        // correcto
+        if(
+            numero ==
+            niveles[nivel].respuesta
+        ){
+
+            correctas++;
+
+            zona.innerHTML =
+            "✅ Correcto";
+
+            zona.classList.remove(
+                "incorrecto"
+            );
+
+            zona.classList.add(
+                "correcto"
+            );
+
+            document.getElementById(
+                "mensaje"
+            ).innerHTML =
+            "🎉 ¡Muy bien!";
+
+            hablar("Muy bien");
+
+            estrellas();
+
+        }
+        
+
+        // incorrecto
+else{
+
+    incorrectas++;
+
+    zona.innerHTML =
+    "❌ Incorrecto";
+
+    zona.classList.remove(
+        "correcto"
+    );
+
+    zona.classList.add(
+        "incorrecto"
+    );
+
+    document.getElementById(
+        "mensaje"
+    ).innerHTML =
+    "❌ La respuesta correcta era: " +
+    niveles[nivel].respuesta;
+
+    hablar(
+        "Incorrecto. La respuesta correcta era " +
+        niveles[nivel].respuesta
+    );
+
+}
+
+        // siguiente automáticamente
+        setTimeout(()=>{
+
+            nivel++;
+
+            // final juego
+            if(nivel >= niveles.length){
+
+                mostrarResultados();
+
+            }
+
+            else{
+
+                cargarNivel();
+
+            }
+
+        },2000);
+
+    }
+
+);
+
+// voz
+function hablar(texto){
+
+    let mensaje =
+    new SpeechSynthesisUtterance(
+        texto
+    );
+
+    mensaje.lang = "es-ES";
+
+    speechSynthesis.speak(
+        mensaje
+    );
+
+}
+
+// estrellas
+function estrellas(){
+
+    for(let i=0; i<20; i++){
+
+        let estrella =
+        document.createElement("div");
+
+        estrella.classList.add(
+            "estrella"
+        );
+
+        estrella.innerHTML = "⭐";
+
+        estrella.style.left =
+        Math.random()*100 + "vw";
+
+        estrella.style.animationDuration =
+        (Math.random()*3+2)
+        + "s";
+
+        document.body.appendChild(
+            estrella
+        );
+
+    }
+
+}
+
+function felicitacionesFinal(){
+
+    let felicitacion =
+    document.createElement("div");
+
+    felicitacion.classList.add(
+        "felicitacion"
+    );
+
+    felicitacion.innerHTML =
+    "🏆 ¡FELICITACIONES! 🏆";
+
+    document.body.appendChild(
+        felicitacion
+    );
+
+    hablar(
+        "Felicitaciones, respondiste todo correctamente"
+    );
+
+    // serpentinas
+    for(let i=0; i<50; i++){
+
+        let serpentina =
+        document.createElement("div");
+
+        serpentina.classList.add(
+            "serpentina"
+        );
+
+        serpentina.style.left =
+        Math.random()*100 + "vw";
+
+        serpentina.style.background =
+        `hsl(${Math.random()*360},
+        100%,50%)`;
+
+        serpentina.style.animationDuration =
+        (Math.random()*3+2)
+        + "s";
+
+        document.body.appendChild(
+            serpentina
+        );
+
+    }
+
+}
+// cargar nivel
+function cargarNivel(){
+
+    document.querySelectorAll(
+        "h1"
+    )[1].innerHTML =
+    niveles[nivel].objetos;
+
+    zona.innerHTML =
+    "Suelta aquí";
+
+    zona.classList.remove(
+        "correcto"
+    );
+
+    zona.classList.remove(
+        "incorrecto"
+    );
+
+    document.getElementById(
+        "mensaje"
+    ).innerHTML = "";
+
+}
+
+// resultados
+function mostrarResultados(){
+
+    document.querySelector(
+        ".contenedor"
+    ).innerHTML = `
+
+        <h1>🎉 Juego Finalizado</h1>
+
+        <h2>✅ Correctas: ${correctas}</h2>
+
+        <h2>❌ Incorrectas: ${incorrectas}</h2>
+
+        <button onclick="location.reload()">
+            🔄 Jugar nuevamente
+        </button>
+
+        <button onclick="irSiguienteJuego()">
+            ➡ Siguiente Juego
+        </button>
+
+    `;
+
+    hablar(
+        "Juego terminado. Tuviste " +
+        correctas +
+        " correctas y " +
+        incorrectas +
+        " incorrectas"
+    );
+
+}
+
+
+
+
+
+</script>
+
+</body>
+</html>

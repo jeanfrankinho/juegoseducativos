@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>4° Básico</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial;
+    background:linear-gradient(to right,#36d1dc,#5b86e5);
+    text-align:center;
+    color:white;
+}
+
+/* ENCABEZADO */
+
+header{
+    background:#0d47a1;
+    padding:20px;
+    position:sticky;
+    top:0;
+}
+
+h1{
+    margin:0;
+    font-size:50px;
+}
+
+/* PUNTAJE */
+
+.puntaje{
+    position:absolute;
+    right:20px;
+    top:20px;
+    background:white;
+    color:#0d47a1;
+    padding:10px 20px;
+    border-radius:20px;
+    font-size:25px;
+    font-weight:bold;
+    box-shadow:0 0 10px black;
+}
+
+/* TARJETAS */
+
+.contenedor{
+    width:90%;
+    margin:auto;
+    padding:20px;
+}
+
+.tarjeta{
+    background:white;
+    color:#333;
+    margin:30px auto;
+    padding:20px;
+    width:80%;
+    border-radius:25px;
+    box-shadow:0 0 15px rgba(0,0,0,0.4);
+    transition:0.4s;
+}
+
+.tarjeta:hover{
+    transform:scale(1.03);
+}
+
+.tarjeta img{
+    width:250px;
+    border-radius:20px;
+    margin-top:10px;
+}
+
+.tarjeta h2{
+    color:#1565c0;
+    font-size:35px;
+}
+
+.tarjeta p{
+    font-size:22px;
+}
+
+/* BOTONES */
+
+button{
+    padding:15px 30px;
+    border:none;
+    border-radius:20px;
+    background:#ff9800;
+    color:white;
+    font-size:22px;
+    cursor:pointer;
+    transition:0.3s;
+    margin-top:15px;
+}
+
+button:hover{
+    background:#f57c00;
+    transform:scale(1.1);
+}
+
+/* BOTON FINAL */
+
+.boton-jugar{
+    margin:40px;
+}
+
+/* ESTRELLAS */
+
+.estrella{
+    position:fixed;
+    font-size:30px;
+    animation:caer 5s linear infinite;
+}
+
+@keyframes caer{
+
+    0%{
+        transform:translateY(-100px);
+    }
+
+    100%{
+        transform:translateY(120vh);
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <h1>📚 Aprendiendo en 4° Básico 📚</h1>
+
+    <div class="puntaje">
+        ⭐ <span id="puntos">0</span>
+    </div>
+
+</header>
+
+<div class="contenedor">
+
+    <!-- LENGUAJE -->
+
+    <div class="tarjeta">
+
+        <h2>📖 Lenguaje</h2>
+
+        <img src="https://cdn.pixabay.com/photo/2016/11/19/14/00/children-1839950_1280.jpg">
+
+        <p>
+            Leer textos y comprender lo que aprendemos usando
+            preguntas, subrayado y nuestra imaginación.
+        </p>
+
+        <button onclick="audioLenguaje()">
+            Escuchar explicación
+        </button>
+
+    </div>
+
+    <!-- MATEMÁTICA -->
+
+    <div class="tarjeta">
+
+        <h2>🔢 Números y Comparación</h2>
+
+        <img src="https://cdn.pixabay.com/photo/2017/01/31/13/14/numbers-2021464_1280.png">
+
+        <p>
+            Aprender a ordenar números y reconocer cuál es mayor
+            y cuál es menor.
+        </p>
+
+        <button onclick="audioNumeros()">
+            Escuchar números
+        </button>
+
+    </div>
+
+    <!-- OPERACIONES -->
+
+    <div class="tarjeta">
+
+        <h2>➕ Operaciones Matemáticas</h2>
+
+        <img src="https://cdn.pixabay.com/photo/2017/09/06/22/43/math-2728102_1280.png">
+
+        <p>
+            Practicar sumas, restas, multiplicaciones y divisiones.
+        </p>
+
+        <button onclick="audioOperaciones()">
+            Escuchar operaciones
+        </button>
+
+    </div>
+
+    <!-- CIENCIAS -->
+
+    <div class="tarjeta">
+
+        <h2>🌿 Ciencias Naturales</h2>
+
+        <img src="https://cdn.pixabay.com/photo/2016/11/29/09/32/animal-1868046_1280.jpg">
+
+        <p>
+            Aprender sobre productores, consumidores y
+            descomponedores en las cadenas alimentarias.
+        </p>
+
+        <button onclick="audioCiencias()">
+            Escuchar explicación
+        </button>
+
+    </div>
+
+    <!-- BOTON -->
+
+    <div class="boton-jugar">
+
+        <a href="juego1.html">
+
+            <button onclick="sumarPuntos()">
+                🎮 Comenzar Juegos
+            </button>
+
+        </a>
+
+    </div>
+
+</div>
+
+<script>
+
+/* PUNTAJE */
+
+let puntos = localStorage.getItem("puntos") || 0;
+
+document.getElementById("puntos").innerHTML = puntos;
+
+/* SUMAR PUNTOS */
+
+function sumarPuntos(){
+
+    puntos = Number(puntos) + 10;
+
+    localStorage.setItem("puntos", puntos);
+
+}
+
+/* AUDIOS */
+
+function hablar(texto){
+
+    let mensaje =
+        new SpeechSynthesisUtterance(texto);
+
+    mensaje.lang = "es-ES";
+
+    speechSynthesis.speak(mensaje);
+
+}
+
+/* LENGUAJE */
+
+function audioLenguaje(){
+
+    hablar(
+        "Leer ayuda a comprender y aprender nuevas historias"
+    );
+
+}
+
+/* NÚMEROS */
+
+function audioNumeros(){
+
+    hablar(
+        "Uno, dos, tres, cuatro, cinco"
+    );
+
+}
+
+/* OPERACIONES */
+
+function audioOperaciones(){
+
+    hablar(
+        "Las matemáticas usan suma, resta, multiplicación y división"
+    );
+
+}
+
+/* CIENCIAS */
+
+function audioCiencias(){
+
+    hablar(
+        "Los productores crean alimento para otros seres vivos"
+    );
+
+}
+
+/* ESTRELLAS */
+
+for(let i=0; i<40; i++){
+
+    let estrella =
+        document.createElement("div");
+
+    estrella.classList.add("estrella");
+
+    estrella.innerHTML = "⭐";
+
+    estrella.style.left =
+        Math.random() * 100 + "vw";
+
+    estrella.style.animationDuration =
+        (Math.random()*3 + 2) + "s";
+
+    document.body.appendChild(estrella);
+
+}
+
+</script>
+
+</body>
+</html>

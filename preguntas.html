@@ -1,0 +1,412 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preguntas de Comprensión</title>
+<progress id="barra" value="0" max="5"></progress>
+
+<style>
+
+body{
+    font-family:Arial, sans-serif;
+    background-image:url("img/fondo juego.jpg");
+    background-size:cover;
+    background-position:center;
+    text-align:center;
+    margin:0;
+    padding:20px;
+}
+
+.contenedor{
+    max-width:800px;
+    margin:auto;
+    background:rgba(0,0,0,0.8);
+    color:white;
+    padding:30px;
+    border-radius:20px;
+}
+
+h1{
+    color:#ffeb3b;
+}
+
+.pregunta{
+    text-align:left;
+    margin:20px 0;
+    font-size:20px;
+    color:white;
+}
+body{
+    font-family:Arial, sans-serif;
+    background:
+    linear-gradient(rgba(0,0,0,0.5),
+                    rgba(0,0,0,0.5)),
+    url("img/fondo juego.jpg");
+    background-size:cover;
+    background-position:center;
+    text-align:center;
+    margin:0;
+    padding:20px;
+}
+
+button{
+    padding:15px 30px;
+    font-size:18px;
+    border:none;
+    border-radius:10px;
+    background:#28a745;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#218838;
+}
+
+#resultado{
+    font-size:24px;
+    font-weight:bold;
+    margin-top:20px;
+}
+.pregunta{
+    display:none;
+}
+
+.pregunta.activa{
+    display:block;
+}
+
+.navegacion{
+    position:fixed;
+    right:20px;
+    top:50%;
+    transform:translateY(-50%);
+}
+
+.circulo{
+    display:block;
+    width:45px;
+    height:45px;
+    line-height:45px;
+    border-radius:50%;
+    background:white;
+    color:black;
+    margin:10px 0;
+    cursor:pointer;
+    font-weight:bold;
+    border:3px solid #2196f3;
+}
+
+.circulo:hover{
+    background:#2196f3;
+    color:white;
+}
+
+.pregunta h3{
+    margin-top:0;
+    color:#d50000;
+}
+
+.opcion{
+    display:block;
+    margin:10px 0;
+    padding:12px;
+    background:#ff0000;
+    border:3px solid #2196f3;
+    border-radius:12px;
+    cursor:pointer;
+    transition:all 0.3s;
+    font-size:18px;
+}
+
+.opcion:hover{
+    background:#bbdefb;
+    transform:scale(1.03);
+}
+
+input[type="radio"]{
+    display:none;
+}
+
+input[type="radio"]:checked + .opcion{
+    background:#4caf50;
+    color:white;
+    border-color:#2e7d32;
+}
+#btnRevisar{
+    display:none;
+}
+.layout{
+    display:flex;
+    max-width:1200px;
+    margin:auto;
+    gap:20px;
+}
+
+.columna-pregunta{
+    flex:4;
+}
+
+.columna-nav{
+    flex:1;
+    display:flex;
+    justify-content:center;
+}
+
+.navegacion{
+    position:static;
+    transform:none;
+}
+
+.circulo.activo{
+    background:#4caf50;
+    color:white;
+}
+.pregunta{
+    display:none;
+    background:white;
+    color:black;
+    padding:30px;
+    border-radius:25px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.4);
+    max-width:800px;
+    margin:auto;
+    border:6px solid #ffeb3b;
+}
+
+.pregunta.activa{
+    display:block;
+}
+
+.pregunta h3{
+    color:#d50000;
+    text-align:center;
+    font-size:28px;
+}
+.columna-pregunta{
+    flex:4;
+    background:rgba(255,255,255,0.9);
+    padding:30px;
+    border-radius:25px;
+    box-shadow:0 0 20px rgba(0,0,0,0.4);
+}
+
+</style>
+
+</head>
+<div class="navegacion">
+    <span class="circulo" onclick="mostrarPregunta(1)">1</span>
+    <span class="circulo" onclick="mostrarPregunta(2)">2</span>
+    <span class="circulo" onclick="mostrarPregunta(3)">3</span>
+    <span class="circulo" onclick="mostrarPregunta(4)">4</span>
+    <span class="circulo" onclick="mostrarPregunta(5)">5</span>
+</div>
+<body>
+    <div class="layout">
+
+    <div class="columna-pregunta">
+
+    
+</div>
+
+<div class="pregunta activa" id="pregunta1">
+<h3>💧 1. ¿Cómo se llama el proceso que ocurre cada día con el agua?</h3>
+
+
+
+<label>
+<input type="radio" name="p1">
+<span class="opcion">🌬️ Ciclo del viento</span>
+</label>
+
+<label>
+<input type="radio" name="p1" value="correcta">
+<span class="opcion">💧 Ciclo del agua</span>
+</label>
+
+<label>
+<input type="radio" name="p1">
+<span class="opcion">🌱 Ciclo de las plantas</span>
+</label>
+</div>
+
+
+<div class="pregunta" id="pregunta2">
+<h3>☀️ 2. ¿Qué ocurre cuando el sol calienta ríos, lagos y mares?</h3>
+
+
+<label>
+<input type="radio" name="p2">
+<span class="opcion">🧊 El agua se congela</span>
+</label>
+
+<label>
+<input type="radio" name="p2">
+<span class="opcion">❌ El agua desaparece</span>
+</label>
+
+<label>
+<input type="radio" name="p2" value="correcta">
+<span class="opcion">☁️ Parte del agua se transforma en vapor</span>
+</label>
+</div>
+
+
+<div class="pregunta" id="pregunta3">
+<h3>☁️ 3. ¿Cómo se llama el proceso en que el vapor forma nubes?</h3>
+
+
+
+<label>
+<input type="radio" name="p3">
+<span class="opcion">🌧️ Precipitación</span>
+</label>
+
+<label>
+<input type="radio" name="p3" value="correcta">
+<span class="opcion">☁️ Condensación</span>
+</label>
+
+<label>
+<input type="radio" name="p3">
+<span class="opcion">♨️ Evaporación</span>
+</label>
+</div>
+
+
+<div class="pregunta" id="pregunta4">
+<h3>🌧️ 4. ¿Qué puede caer de las nubes cuando tienen mucha agua?</h3>
+
+
+
+<label>
+<input type="radio" name="p4">
+<span class="opcion">🍂 Hojas</span>
+</label>
+
+<label>
+<input type="radio" name="p4" value="correcta">
+<span class="opcion">🌧️ Lluvia, nieve o granizo</span>
+</label>
+
+<label>
+<input type="radio" name="p4">
+<span class="opcion">🏜️ Arena</span>
+</label>
+</div>
+
+
+<div class="pregunta" id="pregunta5">
+<h3>🌎 5. ¿Por qué es importante el ciclo del agua?</h3>
+
+
+<label>
+<input type="radio" name="p5" value="correcta">
+<span class="opcion">💚 Porque permite que las plantas, los animales y las personas tengan agua para vivir</span>
+</label>
+
+<label>
+<input type="radio" name="p5">
+<span class="opcion">❌ Porque hace desaparecer los ríos</span>
+</label>
+
+<label>
+<input type="radio" name="p5">
+<span class="opcion">🚫 Porque evita que llueva</span>
+</label>
+
+</div>
+<button id="btnSiguiente" onclick="siguientePregunta()">
+➡️ Siguiente Pregunta
+</button>
+<button id="btnRevisar" onclick="corregir()">
+✅ Revisar respuestas
+</button>
+
+<div id="resultado"></div>
+
+<script>
+
+function corregir(){
+
+    let correctas = document.querySelectorAll(
+        'input[value="correcta"]:checked'
+    ).length;
+
+    let incorrectas = 5 - correctas;
+
+    localStorage.setItem("correctas", correctas);
+    localStorage.setItem("incorrectas", incorrectas);
+
+    window.location.href = "felicitaciones.html";
+}
+const radios = document.querySelectorAll('input[type="radio"]');
+
+radios.forEach(radio => {
+    radio.addEventListener("change", () => {
+
+        let respondidas = 0;
+
+        for(let i=1;i<=5;i++){
+            if(document.querySelector(`input[name="p${i}"]:checked`)){
+                respondidas++;
+            }
+        }
+
+        document.getElementById("barra").value = respondidas;
+    });
+});
+let preguntaActual = 1;
+
+function mostrarPregunta(numero){
+
+    preguntaActual = numero;
+
+    document
+    .querySelectorAll(".pregunta")
+    .forEach(p => p.classList.remove("activa"));
+
+    document
+    .getElementById("pregunta" + numero)
+    .classList.add("activa");
+
+    document
+    .querySelectorAll(".circulo")
+    .forEach(c => c.classList.remove("activo"));
+
+    document
+    .querySelectorAll(".circulo")[numero-1]
+    .classList.add("activo");
+
+    if(numero === 5){
+        document.getElementById("btnSiguiente").style.display = "none";
+        document.getElementById("btnRevisar").style.display = "inline-block";
+    }else{
+        document.getElementById("btnSiguiente").style.display = "inline-block";
+        document.getElementById("btnRevisar").style.display = "none";
+    }
+}
+
+
+function siguientePregunta(){
+
+    if(!document.querySelector(`input[name="p${preguntaActual}"]:checked`)){
+        alert("⚠️ Debes responder la pregunta antes de continuar.");
+        return;
+    }
+
+    if(preguntaActual < 5){
+        mostrarPregunta(preguntaActual + 1);
+    }
+}
+
+    
+
+mostrarPregunta(1);
+
+</script>
+
+</body>
+</html>

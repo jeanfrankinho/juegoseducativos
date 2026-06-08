@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ff2828, #000000);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container{
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            width: 450px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+        }
+
+        h2{
+            margin-bottom: 20px;
+        }
+
+        input{
+            width: 90%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #695858;
+            font-size: 16px;
+        }
+
+        .avatars{
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .avatar{
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: 0.3s;
+        }
+
+        .avatar:hover{
+            transform: scale(1.05);
+        }
+
+        .seleccionado{
+            border: 3px solid rgb(6, 7, 6);
+        }
+
+        button{
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            background: #e24c38;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover{
+            background: #0056b3;
+        }
+
+        canvas{
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-container">
+        <h2>Iniciar Sesión</h2>
+
+        <input type="text" id="nombre" placeholder="Escribe tu nombre">
+
+        <h3>Selecciona un avatar</h3>
+
+        <div class="avatars">
+            <img src="img/img1.jpg" class="avatar" onclick="seleccionarAvatar(this)">
+            <img src="img/img2.jpg" class="avatar" onclick="seleccionarAvatar(this)">
+            <img src="img/img3.jpg" class="avatar" onclick="seleccionarAvatar(this)">
+            <img src="img/img4.jpg" class="avatar" onclick="seleccionarAvatar(this)">
+            <img src="img/img5.jpg" class="avatar" onclick="seleccionarAvatar(this)">
+            <img src="img/img6.jpg" class="avatar" onclick="seleccionarAvatar(this)">
+        </div>
+
+        <button onclick="validarIngreso()">Ingresar</button>
+        <br><br>
+
+        <button onclick="irCuartoBasico()">
+        📚 4° Básico
+        </button>
+    </div>
+
+    <!-- Librería serpentinas -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        let avatarSeleccionado = "";
+
+        function hablar(texto){
+            let mensaje = new SpeechSynthesisUtterance(texto);
+            mensaje.lang = "es-ES";
+            speechSynthesis.speak(mensaje);
+        }
+
+        function seleccionarAvatar(elemento){
+
+            // quitar selección anterior
+            let avatars = document.querySelectorAll(".avatar");
+            avatars.forEach(a => a.classList.remove("seleccionado"));
+
+            // agregar selección
+            elemento.classList.add("seleccionado");
+
+            avatarSeleccionado = elemento.src;
+
+            // audio
+            hablar("Avatar seleccionado");
+        }
+
+        function validarIngreso(){
+
+            let nombre = document.getElementById("nombre").value;
+
+            // Caso 1
+            if(nombre === "" && avatarSeleccionado === ""){
+                hablar("Debes escribir tu nombre y seleccionar un avatar");
+                return;
+            }
+
+            // validar nombre
+            if(nombre === ""){
+                hablar("Por favor ingresa tu nombre");
+                return;
+            }
+
+            // validar avatar
+            if(avatarSeleccionado === ""){
+                hablar("Debes seleccionar un avatar");
+                return;
+            }
+
+            // Caso correcto
+            hablar("Bien hecho " + nombre);
+
+            // serpentinas
+            confetti({
+                particleCount: 200,
+                spread: 120,
+                origin: { y: 0.6 }
+            });
+
+            // guardar datos
+            localStorage.setItem("nombreUsuario", nombre);
+            localStorage.setItem("avatarUsuario", avatarSeleccionado);
+
+            // ir a bienvenida.html
+            setTimeout(() => {
+                window.location.href = "menu.html";
+            }, 3000);
+        }
+        function irCuartoBasico(){
+
+        window.location.href = "juego2.html";
+
+}
+    
+    </script>
+    
+
+</body>
+
+</html>
