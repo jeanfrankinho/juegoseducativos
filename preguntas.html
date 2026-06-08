@@ -387,8 +387,10 @@ function mostrarPregunta(numero){
         document.getElementById("btnSiguiente").style.display = "inline-block";
         document.getElementById("btnRevisar").style.display = "none";
     }
-}
 
+    leerPregunta(numero);
+
+}
 
 function siguientePregunta(){
 
@@ -406,7 +408,42 @@ function siguientePregunta(){
 
 mostrarPregunta(1);
 
+let correctas = 4;
+let incorrectas = 1;
+
+localStorage.setItem("correctas", correctas);
+localStorage.setItem("incorrectas", incorrectas);
+
+function leerPregunta(numero){
+
+    speechSynthesis.cancel();
+
+    const pregunta =
+    document.getElementById("pregunta" + numero);
+
+    const texto =
+    pregunta.innerText;
+
+    const voz =
+    new SpeechSynthesisUtterance(texto);
+
+    voz.lang = "es-ES"; // Puedes probar también "es-CL"
+    voz.rate = 0.9;
+    voz.pitch = 1;
+
+    speechSynthesis.speak(voz);
+}
+leerPregunta(numero);
+window.onload = function(){
+    mostrarPregunta(1);
+};
+
+window.location.href = "resultado.html";
+
+
+
 </script>
+
 
 </body>
 </html>
