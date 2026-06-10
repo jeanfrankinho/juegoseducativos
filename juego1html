@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Detectives de la Lectura</title>
+
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right,#4facfe,#00f2fe);
+    margin:0;
+    padding:20px;
+    text-align:center;
+}
+
+.contenedor{
+    max-width:900px;
+    margin:auto;
+    background:white;
+    padding:20px;
+    border-radius:20px;
+    box-shadow:0 0 15px rgba(0,0,0,0.3);
+}
+
+h1{
+    color:#0066cc;
+}
+
+.texto{
+    background:#fff8dc;
+    padding:20px;
+    border-radius:15px;
+    text-align:left;
+    font-size:20px;
+    line-height:1.6;
+}
+
+.pregunta{
+    margin-top:20px;
+    background:#e8f5e9;
+    padding:15px;
+    border-radius:15px;
+}
+
+button{
+    background:#2196f3;
+    color:white;
+    border:none;
+    padding:12px 25px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:18px;
+}
+
+button:hover{
+    background:#1565c0;
+}
+
+input{
+    width:80%;
+    padding:10px;
+    font-size:16px;
+}
+
+#resultado{
+    margin-top:20px;
+    font-size:22px;
+    font-weight:bold;
+}
+
+img{
+    width:250px;
+    border-radius:15px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="contenedor">
+
+<h1>🕵️ Detectives de la Lectura</h1>
+
+<img src="https://cdn.pixabay.com/photo/2016/11/14/03/16/book-1822474_1280.jpg">
+
+<h2>Lee atentamente</h2>
+
+<div class="texto">
+
+Tomás fue al parque con su perro Max durante una tarde soleada.
+Mientras caminaban, encontraron una pelota roja debajo de un árbol.
+Max comenzó a jugar felizmente y Tomás se divirtió mucho.
+Antes de volver a casa, ambos descansaron en una banca y compartieron agua.
+
+</div>
+
+<div class="pregunta">
+
+<h3>🔍 Información importante</h3>
+
+<p>¿De qué color era la pelota?</p>
+
+<input type="text" id="p1">
+
+</div>
+
+<div class="pregunta">
+
+<h3>🧠 Visualiza la historia</h3>
+
+<p>¿Dónde encontró Tomás la pelota?</p>
+
+<input type="text" id="p2">
+
+</div>
+
+<div class="pregunta">
+
+<h3>❓ Comprensión lectora</h3>
+
+<p>¿Cómo se sentía Max?</p>
+
+<input type="text" id="p3">
+
+</div>
+
+<div class="pregunta">
+
+<h3>💭 Relación con tu experiencia</h3>
+
+<p>¿Has jugado alguna vez con una mascota? Escribe Sí o No.</p>
+
+<input type="text" id="p4">
+
+</div>
+
+<div class="pregunta">
+
+<h3>📋 Recapitula</h3>
+
+<p>¿Dónde descansaron Tomás y Max?</p>
+
+<input type="text" id="p5">
+
+</div>
+
+<br>
+
+<button onclick="corregir()">Revisar respuestas</button>
+
+<div id="resultado"></div>
+
+</div>
+
+<script>
+
+function corregir(){
+
+let puntos = 0;
+
+let p1 = document.getElementById("p1").value.toLowerCase();
+let p2 = document.getElementById("p2").value.toLowerCase();
+let p3 = document.getElementById("p3").value.toLowerCase();
+let p4 = document.getElementById("p4").value.toLowerCase();
+let p5 = document.getElementById("p5").value.toLowerCase();
+
+if(p1.includes("roja")) puntos++;
+if(p2.includes("árbol") || p2.includes("arbol")) puntos++;
+if(p3.includes("feliz")) puntos++;
+if(p4.includes("sí") || p4.includes("si") || p4.includes("no")) puntos++;
+if(p5.includes("banca")) puntos++;
+
+if(puntos == 5){
+document.getElementById("resultado").innerHTML =
+"🏆 ¡Excelente detective! Obtuviste 5/5 puntos.";
+}
+else{
+document.getElementById("resultado").innerHTML =
+"⭐ Obtuviste " + puntos + "/5 puntos. ¡Sigue practicando!";
+}
+
+}
+
+setTimeout(() => {
+                window.location.href = "activid";
+            }, 3000);
+
+</script>
+
+</body>
+</html>

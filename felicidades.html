@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Felicitaciones</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    text-align:center;
+    background-image:url("img/fondo juego.jpg");
+    background-size:cover;
+    background-position:center;
+}
+
+.caja{
+    width:80%;
+    max-width:600px;
+    margin:80px auto;
+    background:rgba(255,255,255,.95);
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 0 20px rgba(0,0,0,.3);
+}
+
+h1{
+    color:#28a745;
+    font-size:45px;
+}
+
+p{
+    font-size:25px;
+}
+button{
+    margin-top:20px;
+    padding:15px 30px;
+    font-size:22px;
+    border:none;
+    border-radius:15px;
+    background:#2196f3;
+    color:white;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.1);
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="caja">
+
+<h1>🎉 ¡Felicitaciones! 🎉</h1>
+
+<p id="puntos"></p>
+<p id="correctas"></p>
+<p id="incorrectas"></p>
+
+<h2>Has terminado el aprendizaje.</h2>
+<button onclick="reiniciar()">
+🔄 Volver a jugar
+</button>
+
+</div>
+
+<script>
+
+
+
+const puntos = localStorage.getItem("puntos") || 0;
+const correctas = localStorage.getItem("correctas") || 0;
+const incorrectas = localStorage.getItem("incorrectas") || 0;
+
+document.getElementById("puntos").innerHTML =
+"🏆 Puntaje: " + puntos + " / 3";
+
+document.getElementById("correctas").innerHTML =
+"✅ Respuestas correctas: " + correctas;
+
+document.getElementById("incorrectas").innerHTML =
+"❌ Respuestas incorrectas: " + incorrectas;
+
+let mensaje =
+"Felicitaciones. ";
+
+if(correctas == 3){
+    mensaje += "Obtuviste todas las respuestas correctas.";
+}
+else{
+    mensaje +=
+    "Tuviste " + correctas +
+    " respuestas correctas y " +
+    incorrectas +
+    " incorrectas.";
+}
+
+const voz = new SpeechSynthesisUtterance(mensaje);
+voz.lang = "es-CL";
+speechSynthesis.speak(voz);
+
+function reiniciar(){
+
+    localStorage.clear();
+
+    window.location.href = "arrastre.html";
+    // Cambia index.html por el nombre de tu juego
+}
+
+</script>
+
+
+</body>
+</html>

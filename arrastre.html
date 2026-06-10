@@ -5,6 +5,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Juego de Arrastre</title>
+<button onclick="leerInstrucciones()">
+🔊 Escuchar instrucciones
+</button>
 
 <style>
 
@@ -112,13 +115,31 @@ h1{
 }
 
 .zona{
-    border:4px dashed #2196f3;
-    min-height:70px;
-    padding:20px;
-    margin:20px 0;
-    border-radius:15px;
-    background:#f5f5f5;
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    border:6px solid #2196f3;
+    background:linear-gradient(135deg,#bbdefb,#e3f2fd);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    margin:20px auto;
+    padding:15px;
+    font-weight:bold;
+    font-size:18px;
+    box-shadow:0 0 20px rgba(33,150,243,0.5);
     transition:0.3s;
+}
+.zona b{
+    display:block;
+    margin-top:10px;
+    color:#d50000;
+    font-size:22px;
+}
+.zona:hover{
+    transform:scale(1.08);
+    box-shadow:0 0 30px rgba(33,150,243,0.8);
 }
 
 .zona:hover{
@@ -168,15 +189,15 @@ Precipitación
 </div>
 
 <div class="zona" data-correcta="evaporacion">
-☀️ El agua se convierte en vapor y sube al cielo.
+El agua se convierte en vapor y sube al cielo.
 </div>
 
 <div class="zona" data-correcta="condensacion">
-☁️ El vapor forma nubes.
+El vapor forma nubes.
 </div>
 
 <div class="zona" data-correcta="precipitacion">
-🌧️ Cae lluvia, nieve o granizo.
+Cae lluvia, nieve o granizo.
 </div>
 
 <button onclick="revisar()">
@@ -188,6 +209,18 @@ Precipitación
 </div>
 
 <script>
+    function leerInstrucciones(){
+
+    speechSynthesis.cancel();
+
+    const voz =
+    new SpeechSynthesisUtterance(
+    "Arrastra la palabra correcta a cada círculo y luego presiona revisar."
+    );
+
+    voz.lang = "es-CL";
+    speechSynthesis.speak(voz);
+}
 
 const palabras =
 document.querySelectorAll(".palabra");
@@ -205,6 +238,8 @@ palabras.forEach(palabra=>{
 
 zonas.forEach(zona=>{
 
+    const textoOriginal = zona.innerHTML;
+
     zona.addEventListener("dragover",e=>{
         e.preventDefault();
     });
@@ -218,8 +253,10 @@ zonas.forEach(zona=>{
 
         zona.dataset.usuario = dato;
 
-        zona.innerHTML +=
-        "<br><b>" +
+        // Reemplaza el contenido anterior
+        zona.innerHTML =
+        textoOriginal +
+        "<br><br><b>" +
         document.getElementById(dato).textContent +
         "</b>";
 
@@ -231,58 +268,72 @@ zonas.forEach(zona=>{
 function revisar(){
 
     let puntos = 0;
+    let correctas = 0;
+    let incorrectas = 0;
 
     zonas.forEach(zona=>{
 
-        if(
-            zona.dataset.usuario ===
-            zona.dataset.correcta
-        ){
+        if(zona.dataset.usuario === zona.dataset.correcta){
             puntos++;
-            zona.classList.add("correcta");
+            correctas++;
+        }else{
+            incorrectas++;
         }
 
     });
 
-    document.getElementById("resultado").innerHTML =
-    "🏆 Puntos obtenidos: " + puntos + " / 3";
+    localStorage.setItem("puntos", puntos);
+    localStorage.setItem("correctas", correctas);
+    localStorage.setItem("incorrectas", incorrectas);
 
-    let mensaje = "";
-
-    if(puntos == 3){
-
-        mensaje =
-        "Excelente. Completaste el ciclo del agua correctamente.";
-
-        document.getElementById("resultado").innerHTML +=
-        "<br>🎉 ¡Eres un campeón del ciclo del agua! 🎉";
-
-    }
-    else if(puntos == 2){
-
-        mensaje =
-        "Muy bien. Acertaste dos respuestas.";
-
-    }
-    else{
-
-        mensaje =
-        "Sigue practicando. Puedes hacerlo mejor.";
-
-    }
-
-    const voz =
-    new SpeechSynthesisUtterance(mensaje);
-
-    voz.lang = "es-CL";
-    voz.rate = 1;
-
-    speechSynthesis.speak(voz);
+    window.location.href = "felicidades.html";
 
 }
 
+window.onload = function(){
+
+    const texto =
+    "Arrastra la palabra correcta. " +
+    "El agua se convierte en vapor y sube al cielo. " +
+    "El vapor forma nubes. " +
+    "Cae lluvia, nieve o granizo. " +
+    "Luego presiona el botón revisar.";
+
+    const voz =
+    new SpeechSynthesisUtterance(texto);
+
+    voz.lang = "es-CL";
+    voz.rate = 0.9;
+
+    speechSynthesis.speak(voz);
+
+};
+
+zonas.forEach(zona=>{
+
+    zona.addEventListener("click",()=>{
+
+        speechSynthesis.cancel();
+
+        let texto =
+        zona.textContent
+        .replace(/[\u{1F300}-\u{1FAFF}]/gu,"")
+        .trim();
+
+        const voz =
+        new SpeechSynthesisUtterance(texto);
+
+        voz.lang = "es-CL";
+        voz.rate = 0.9;
+
+        speechSynthesis.speak(voz);
+
+    });
+
+});
 
 </script>
+
 
 </body>
 </html>

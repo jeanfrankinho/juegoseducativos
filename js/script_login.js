@@ -2,8 +2,6 @@ let avatarSeleccionado = null;
 
 const avatar = document.querySelectorAll(".avatar");
 const boton = document.getElementById("Ingresar");
-
-// 🔊 Audio de error
 const audioError = new Audio("sonidos/audioerror.mp3");
 
 // 🎤 Voz en español (preferir femenina si existe)

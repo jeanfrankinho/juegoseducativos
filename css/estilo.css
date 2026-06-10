@@ -54,4 +54,21 @@
     color: rgba(5, 3, 3, 0.281);
     border-radius: 10px;
     cursor: pointer;
+
+    button{
+    margin-top: 25px;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 10px;
+    background: #fa0606;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover{
+    background: #000;
+    transform: scale(1.05);
+}
     }
