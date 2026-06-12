@@ -9,24 +9,94 @@
 <style>
 
 body{
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ff2828, #000000);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container{
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            width: 450px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+        }
+
+        h2{
+            margin-bottom: 20px;
+        }
+
+        input{
+            width: 90%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #695858;
+            font-size: 16px;
+        }
+
+        .avatars{
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .avatar{
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: 0.3s;
+        }
+
+        .avatar:hover{
+            transform: scale(1.05);
+        }
+
+        .seleccionado{
+            border: 3px solid rgb(6, 7, 6);
+        }
+
+        button{
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            background: #e24c38;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover{
+            background: #0056b3;
+        }
+
+        canvas{
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+        body{
     font-family: Arial, sans-serif;
-    background: linear-gradient(to right,#4facfe,#00f2fe);
-    margin:0;
-    padding:20px;
-    text-align:center;
-}
-
-.contenedor{
-    max-width:900px;
-    margin:auto;
-    background:white;
-    padding:20px;
-    border-radius:20px;
-    box-shadow:0 0 15px rgba(0,0,0,0.3);
-}
-
-h1{
-    color:#0066cc;
+    background:
+        radial-gradient(circle at top left, rgba(0,255,255,0.3), transparent 40%),
+        radial-gradient(circle at bottom right, rgba(255,0,255,0.3), transparent 40%),
+        linear-gradient(135deg, #050816, #0a0f2c, #111827);
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
 }
 
 .texto{
