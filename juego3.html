@@ -71,6 +71,11 @@ button{
     color:white;
     cursor:pointer;
     font-size:18px;
+    margin:5px;
+}
+
+.btn-menu{
+    background:linear-gradient(45deg,#ff9800,#ff5722);
 }
 </style>
 </head>
@@ -91,6 +96,10 @@ button{
 
 <button onclick="verificar()">Verificar</button>
 <button onclick="siguienteNivel()">Siguiente nivel</button>
+
+<button class="btn-menu" onclick="irMenu()">
+🏠 Menú Principal
+</button>
 
 <p id="resultado"></p>
 
@@ -200,6 +209,11 @@ function hablar(texto){
     let voz = new SpeechSynthesisUtterance(texto);
     voz.lang = "es-CL";
     speechSynthesis.speak(voz);
+}
+
+// MENÚ PRINCIPAL
+function irMenu(){
+    window.location.href = "menu.html";
 }
 
 // INICIO
