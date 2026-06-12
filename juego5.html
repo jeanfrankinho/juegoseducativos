@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Juego Pro - Oraciones</title>
+<title>ULTRA PRO - Lenguaje</title>
 
 <style>
 
@@ -11,8 +11,8 @@ body {
     font-family: Arial, sans-serif;
     text-align: center;
     min-height: 100vh;
-    padding: 20px;
     margin: 0;
+    padding: 20px;
 
     background:
     radial-gradient(circle at 10% 20%, #ffecd2 0%, transparent 40%),
@@ -23,16 +23,15 @@ body {
     color: white;
 }
 
-/* 🎮 HUD */
+/* HUD */
 .hud {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
     margin-bottom: 15px;
-    font-size: 18px;
 }
 
-/* 🧠 CAJA */
+/* CAJA */
 .container {
     max-width: 750px;
     margin: auto;
@@ -41,23 +40,19 @@ body {
     border-radius: 20px;
     backdrop-filter: blur(10px);
     border: 2px solid #00e5ff;
-    box-shadow: 0 0 25px #00e5ff55;
 }
 
-/* 📝 BOTONES */
+/* BOTONES */
 button {
     display: block;
     width: 100%;
     margin: 10px 0;
     padding: 15px;
     font-size: 18px;
-
     border: none;
     border-radius: 12px;
-
     background: linear-gradient(45deg, #00e5ff, #2979ff);
     color: white;
-
     cursor: pointer;
     transition: 0.2s;
 }
@@ -66,16 +61,15 @@ button:hover {
     transform: scale(1.05);
 }
 
-/* 📢 MENSAJE */
+/* MENSAJES */
 #mensaje {
     font-size: 24px;
-    margin-top: 15px;
-    font-weight: bold;
+    margin-top: 10px;
 }
 
-/* ✨ ANIMACIONES */
-.ok { color: #00ff9d; animation: pop 0.4s; }
-.bad { color: #ff5252; animation: shake 0.4s; }
+/* ANIMACIONES */
+.ok { color: #00ff9d; animation: pop 0.3s; }
+.bad { color: #ff4d4d; animation: shake 0.3s; }
 
 @keyframes pop {
     0% { transform: scale(0.8); }
@@ -89,9 +83,21 @@ button:hover {
     100% { transform: translateX(0); }
 }
 
-/* ❤️ vidas */
-.vida {
-    color: #ff4d4d;
+/* BARRA DE TIEMPO */
+#barraContainer {
+    width: 100%;
+    height: 18px;
+    background: #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+#barra {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg,#00e5ff,#2979ff);
+    transition: 0.3s;
 }
 
 </style>
@@ -99,18 +105,24 @@ button:hover {
 
 <body>
 
-<h2>📚 Juego Pro de Lenguaje</h2>
+<h2>🎮 ULTRA PRO - Lenguaje 4° Básico</h2>
 
 <div class="hud">
     <div>🏆 Puntos: <span id="puntos">0</span></div>
     <div>⭐ Estrellas: <span id="estrellas">0</span></div>
     <div>❤️ Vidas: <span id="vidas">3</span></div>
-    <div>⏱️ Tiempo: <span id="tiempo">10</span>s</div>
+    <div>⏱️ Tiempo: <span id="tiempo">20</span></div>
 </div>
 
 <div class="container">
 
+    <!-- BARRA TIEMPO -->
+    <div id="barraContainer">
+        <div id="barra"></div>
+    </div>
+
     <h2 id="nivel"></h2>
+
     <div id="opciones"></div>
 
     <p id="mensaje"></p>
@@ -119,6 +131,11 @@ button:hover {
 
 <script>
 
+/* 🔊 SONIDOS */
+const sonidoOk = new Audio("https://www.myinstants.com/media/sounds/success-fanfare-trumpets.mp3");
+const sonidoBad = new Audio("https://www.myinstants.com/media/sounds/wrong-answer-sound-effect.mp3");
+
+/* PREGUNTAS */
 const preguntas = [
 {
     correcta: "María fue al parque a jugar.",
@@ -150,41 +167,53 @@ let i = 0;
 let puntos = 0;
 let estrellas = 0;
 let vidas = 3;
-let tiempo = 10;
+let tiempo = 20;
 let timer;
 
-/* ⏱️ TIMER */
+/* ⏱️ TIMER ULTRA PRO */
 function iniciarTiempo(){
+
     clearInterval(timer);
-    tiempo = 10;
+    tiempo = 20;
+
+    document.getElementById("barra").style.width = "100%";
+    document.getElementById("barra").style.background =
+        "linear-gradient(90deg,#00e5ff,#2979ff)";
 
     timer = setInterval(() => {
+
         tiempo--;
+
         document.getElementById("tiempo").innerText = tiempo;
 
+        let porcentaje = (tiempo / 20) * 100;
+        document.getElementById("barra").style.width = porcentaje + "%";
+
+        if(tiempo <= 5){
+            document.getElementById("barra").style.background = "#ff4d4d";
+        }
+
         if(tiempo <= 0){
+            clearInterval(timer);
             perderVida();
         }
+
     }, 1000);
 }
 
-/* 🔥 CARGAR PREGUNTA */
+/* CARGAR */
 function cargar(){
 
     if(i >= preguntas.length){
-        document.getElementById("nivel").innerText =
-        "🎉 Juego terminado";
-
+        document.getElementById("nivel").innerText = "🎉 ¡GANASTE!";
         document.getElementById("opciones").innerHTML = "";
         document.getElementById("mensaje").innerText =
-        `Puntaje final: ${puntos} | ⭐ ${estrellas}`;
+        `🏆 ${puntos} puntos | ⭐ ${estrellas}`;
         return;
     }
 
     document.getElementById("nivel").innerText =
     "Nivel " + (i + 1);
-
-    document.getElementById("mensaje").innerText = "";
 
     let cont = document.getElementById("opciones");
     cont.innerHTML = "";
@@ -202,26 +231,32 @@ function cargar(){
     iniciarTiempo();
 }
 
-/* 🎯 VERIFICAR */
+/* CHECK */
 function check(opcion){
 
     clearInterval(timer);
 
     let msg = document.getElementById("mensaje");
 
+    let bonus = tiempo > 15 ? 5 : 0; // 🧠 bonus por rapidez
+
     if(opcion === preguntas[i].correcta){
-        msg.innerText = "✅ ¡Correcto!";
+
+        msg.innerText = "✅ Correcto +10";
         msg.className = "ok";
 
-        puntos += 10;
+        puntos += 10 + bonus;
         estrellas++;
 
+        sonidoOk.play();
         hablar("Muy bien");
 
     } else {
+
         msg.innerText = "❌ Incorrecto";
         msg.className = "bad";
 
+        sonidoBad.play();
         perderVida();
     }
 
@@ -231,16 +266,17 @@ function check(opcion){
     setTimeout(cargar, 1200);
 }
 
-/* ❤️ VIDAS */
+/* VIDAS */
 function perderVida(){
 
     vidas--;
+
     actualizar();
 
     if(vidas <= 0){
         document.getElementById("opciones").innerHTML = "";
         document.getElementById("mensaje").innerText =
-        "💀 Game Over";
+        "💀 GAME OVER";
         clearInterval(timer);
     } else {
         i++;
@@ -248,14 +284,14 @@ function perderVida(){
     }
 }
 
-/* 📊 HUD */
+/* HUD */
 function actualizar(){
     document.getElementById("puntos").innerText = puntos;
     document.getElementById("estrellas").innerText = estrellas;
     document.getElementById("vidas").innerText = vidas;
 }
 
-/* 🔊 VOZ */
+/* VOZ */
 function hablar(txt){
     let v = new SpeechSynthesisUtterance(txt);
     v.lang = "es-CL";
