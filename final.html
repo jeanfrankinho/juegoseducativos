@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>¡Nivel Completado!</title>
+<title>¡Logro Alcanzado!</title>
 
 <style>
 
@@ -37,13 +37,86 @@ body{
     to{transform:scale(1); opacity:1;}
 }
 
-/* ESTRELLAS */
-.stars{
-    font-size:50px;
-    margin:15px 0;
-    animation: brillo 1.5s infinite alternate;
+/* TEXTO */
+h1{
+    font-size:40px;
 }
 
-@keyframes brillo{
-    from{transform:scale(1); filter:drop-shadow(0 0 5px gold);}
-    to{transform:scale(1.2); filter:drop
+p{
+    font-size:22px;
+}
+
+/* BOTÓN */
+button{
+    margin-top:20px;
+    padding:12px 25px;
+    font-size:18px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(45deg,#00e5ff,#2979ff);
+    color:white;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.1);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h1>🎉 ¡FELICITACIONES! 🎉</h1>
+
+    <p>Has completado el juego con éxito</p>
+
+    <!-- PUNTAJE -->
+    <h2 id="puntaje">Puntaje total: 0</h2>
+
+    <p>🏆 Excelente desempeño</p>
+
+    <button onclick="volver()">
+        🔄 Volver al menú
+    </button>
+
+</div>
+
+<!-- CONFETTI -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<script>
+
+// 🎯 obtener puntaje desde localStorage
+let puntos = localStorage.getItem("puntos") || 0;
+
+// mostrar puntaje
+document.getElementById("puntaje").innerText =
+"🏆 Puntaje total: " + puntos;
+
+// 🎉 confeti
+confetti({
+    particleCount: 250,
+    spread: 120,
+    origin: { y: 0.6 }
+});
+
+// 🔊 voz de felicitación
+let mensaje = new SpeechSynthesisUtterance(
+    "Felicitaciones, has completado el juego con éxito"
+);
+mensaje.lang = "es-CL";
+speechSynthesis.speak(mensaje);
+
+// 🔁 volver al menú
+function volver(){
+    window.location.href = "menu.html";
+}
+
+</script>
+
+</body>
+</html>
