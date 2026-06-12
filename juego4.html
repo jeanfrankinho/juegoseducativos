@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>La Caza del Adjetivo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #f0f8ff;
+            padding: 30px;
+        }
+
+        .game-box {
+            background: white;
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px gray;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            background: #4CAF50;
+            color: white;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        #result {
+            font-size: 22px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        #score {
+            color: #0077cc;
+        }
+    </style>
+</head>
+<body>
+
+<div class="game-box">
+    <h1>🕵️ La Caza del Adjetivo</h1>
+
+    <p id="sentence"></p>
+
+    <div id="options"></div>
+
+    <p id="result"></p>
+    <h2 id="score">Puntos: 0</h2>
+</div>
+
+<script>
+const questions = [
+    {
+        sentence: "El perro juguetón corre por el parque.",
+        adjective: "juguetón",
+        options: ["perro", "corre", "juguetón"]
+    },
+    {
+        sentence: "La casa grande tiene un jardín.",
+        adjective: "grande",
+        options: ["casa", "grande", "jardín"]
+    },
+    {
+        sentence: "El dragón feroz protege el castillo.",
+        adjective: "feroz",
+        options: ["dragón", "protege", "feroz"]
+    },
+    {
+        sentence: "La flor hermosa crece en primavera.",
+        adjective: "hermosa",
+        options: ["flor", "primavera", "hermosa"]
+    }
+];
+
+let current = 0;
+let score = 0;
+
+function loadQuestion() {
+    if (current >= questions.length) {
+        document.getElementById("sentence").innerHTML =
+            `🎉 Juego terminado. Tu puntuación final es ${score}`;
+        document.getElementById("options").innerHTML = "";
+        document.getElementById("result").innerHTML = "";
+        return;
+    }
+
+    const q = questions[current];
+
+    document.getElementById("sentence").textContent = q.sentence;
+    document.getElementById("result").textContent = "";
+
+    const optionsDiv = document.getElementById("options");
+    optionsDiv.innerHTML = "";
+
+    q.options.sort(() => Math.random() - 0.5);
+
+    q.options.forEach(word => {
+        const btn = document.createElement("button");
+        btn.textContent = word;
+
+        btn.onclick = () => checkAnswer(word);
+
+        optionsDiv.appendChild(btn);
+    });
+}
+
+function checkAnswer(answer) {
+    const correct = questions[current].adjective;
+
+    if (answer === correct) {
+        document.getElementById("result").textContent =
+            "✅ ¡Correcto! Encontraste el adjetivo.";
+        score += 10;
+    } else {
+        document.getElementById("result").textContent =
+            "❌ Incorrecto. Inténtalo en la siguiente.";
+    }
+
+    document.getElementById("score").textContent =
+        `Puntos: ${score}`;
+
+    current++;
+
+    setTimeout(loadQuestion, 1500);
+}
+
+loadQuestion();
+</script>
+
+</body>
+</html>
