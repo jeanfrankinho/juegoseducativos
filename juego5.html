@@ -283,13 +283,14 @@ function cargar(){
 }
 
 /* CHECK */
+
 function check(opcion){
 
     clearInterval(timer);
 
     let msg = document.getElementById("mensaje");
 
-    let bonus = tiempo > 15 ? 5 : 0; // 🧠 bonus por rapidez
+    let bonus = tiempo > 15 ? 5 : 0;
 
     if(opcion === preguntas[i].correcta){
 
@@ -302,21 +303,26 @@ function check(opcion){
         sonidoOk.play();
         hablar("Muy bien");
 
+        actualizar();
+
+        i++; // SOLO AVANZA SI ESTÁ CORRECTO
+        setTimeout(cargar, 1200);
+
     } else {
 
-        msg.innerText = "❌ Incorrecto";
+        msg.innerText = "❌ Incorrecto, pierdes una vida";
         msg.className = "bad";
 
         sonidoBad.play();
-        perderVida();
+
+        perderVida(); // 👈 NO AVANZA NIVEL
+
+        actualizar();
+
+        // 🔥 SIGUE EN LA MISMA PREGUNTA
+        setTimeout(cargar, 1200);
     }
-
-    actualizar();
-
-    i++;
-    setTimeout(cargar, 1200);
 }
-
 /* VIDAS */
 function perderVida(){
 
@@ -329,12 +335,8 @@ function perderVida(){
         document.getElementById("mensaje").innerText =
         "💀 GAME OVER";
         clearInterval(timer);
-    } else {
-        i++;
-        cargar();
     }
 }
-
 /* HUD */
 function actualizar(){
     document.getElementById("puntos").innerText = puntos;
