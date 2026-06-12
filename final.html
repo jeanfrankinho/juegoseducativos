@@ -1,1 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¡Nivel Completado!</title>
 
+<style>
+
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:Arial, sans-serif;
+    text-align:center;
+
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color:white;
+    overflow:hidden;
+}
+
+/* CAJA */
+.card{
+    background: rgba(255,255,255,0.1);
+    padding:40px;
+    border-radius:25px;
+    backdrop-filter: blur(10px);
+    border:2px solid #00e5ff;
+    box-shadow:0 0 25px #00e5ff;
+    animation: pop 0.8s ease;
+}
+
+@keyframes pop{
+    from{transform:scale(0.5); opacity:0;}
+    to{transform:scale(1); opacity:1;}
+}
+
+/* ESTRELLAS */
+.stars{
+    font-size:50px;
+    margin:15px 0;
+    animation: brillo 1.5s infinite alternate;
+}
+
+@keyframes brillo{
+    from{transform:scale(1); filter:drop-shadow(0 0 5px gold);}
+    to{transform:scale(1.2); filter:drop
