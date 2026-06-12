@@ -33,20 +33,30 @@ h1{
 p{
     font-size:25px;
 }
+
 button{
     margin-top:20px;
     padding:15px 30px;
     font-size:22px;
     border:none;
     border-radius:15px;
-    background:#2196f3;
     color:white;
     cursor:pointer;
     transition:0.3s;
+    margin-left:10px;
+    margin-right:10px;
 }
 
 button:hover{
     transform:scale(1.1);
+}
+
+.btn-jugar{
+    background:#2196f3;
+}
+
+.btn-menu{
+    background:#ff9800;
 }
 
 </style>
@@ -63,15 +73,18 @@ button:hover{
 <p id="incorrectas"></p>
 
 <h2>Has terminado el aprendizaje.</h2>
-<button onclick="reiniciar()">
+
+<button class="btn-jugar" onclick="reiniciar()">
 🔄 Volver a jugar
+</button>
+
+<button class="btn-menu" onclick="irMenu()">
+📚 Todos los juegos
 </button>
 
 </div>
 
 <script>
-
-
 
 const puntos = localStorage.getItem("puntos") || 0;
 const correctas = localStorage.getItem("correctas") || 0;
@@ -86,8 +99,7 @@ document.getElementById("correctas").innerHTML =
 document.getElementById("incorrectas").innerHTML =
 "❌ Respuestas incorrectas: " + incorrectas;
 
-let mensaje =
-"Felicitaciones. ";
+let mensaje = "Felicitaciones. ";
 
 if(correctas == 3){
     mensaje += "Obtuviste todas las respuestas correctas.";
@@ -105,15 +117,15 @@ voz.lang = "es-CL";
 speechSynthesis.speak(voz);
 
 function reiniciar(){
-
     localStorage.clear();
-
     window.location.href = "arrastre.html";
-    // Cambia index.html por el nombre de tu juego
+}
+
+function irMenu(){
+    window.location.href = "menu.html";
 }
 
 </script>
-
 
 </body>
 </html>
