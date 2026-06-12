@@ -67,7 +67,6 @@ button:hover {
     margin-top: 10px;
 }
 
-/* ANIMACIONES */
 .ok { color: #00ff9d; animation: pop 0.3s; }
 .bad { color: #ff4d4d; animation: shake 0.3s; }
 
@@ -83,7 +82,7 @@ button:hover {
     100% { transform: translateX(0); }
 }
 
-/* BARRA DE TIEMPO */
+/* BARRA TIEMPO */
 #barraContainer {
     width: 100%;
     height: 18px;
@@ -116,7 +115,6 @@ button:hover {
 
 <div class="container">
 
-    <!-- BARRA TIEMPO -->
     <div id="barraContainer">
         <div id="barra"></div>
     </div>
@@ -131,107 +129,51 @@ button:hover {
 
 <script>
 
-/* 🔊 SONIDOS */
 const sonidoOk = new Audio("https://www.myinstants.com/media/sounds/success-fanfare-trumpets.mp3");
 const sonidoBad = new Audio("https://www.myinstants.com/media/sounds/wrong-answer-sound-effect.mp3");
 
 const preguntas = [
-
 {
     correcta: "María fue al parque a jugar.",
-    opciones: [
-        "maría fue al parque a jugar",
-        "María fue al parque a jugar.",
-        "María fue al parque a jugar"
-    ]
+    opciones: ["maría fue al parque a jugar","María fue al parque a jugar.","María fue al parque a jugar"]
 },
-
 {
     correcta: "¿Dónde está mi mochila?",
-    opciones: [
-        "Donde está mi mochila?",
-        "¿Dónde está mi mochila?",
-        "¿Donde esta mi mochila?"
-    ]
+    opciones: ["Donde está mi mochila?","¿Dónde está mi mochila?","¿Donde esta mi mochila?"]
 },
-
 {
     correcta: "Los niños estudian matemáticas.",
-    opciones: [
-        "Los niños estudian matematicas.",
-        "los niños estudian matemáticas.",
-        "Los niños estudian matemáticas."
-    ]
+    opciones: ["Los niños estudian matematicas.","los niños estudian matemáticas.","Los niños estudian matemáticas."]
 },
-
 {
     correcta: "¡Qué hermoso día hace hoy!",
-    opciones: [
-        "Que hermoso día hace hoy!",
-        "¡Qué hermoso día hace hoy!",
-        "¡Que hermoso dia hace hoy!"
-    ]
+    opciones: ["Que hermoso día hace hoy!","¡Qué hermoso día hace hoy!","¡Que hermoso dia hace hoy!"]
 },
-
-// 🟢 NIVEL 5 (más difícil)
 {
     correcta: "El perro negro corre rápidamente por el parque.",
-    opciones: [
-        "El perro negro corre rápidamente por el parque.",
-        "El perro negro corre rapidamente por el parque.",
-        "el perro negro corre rápidamente por el parque."
-    ]
-},
-
-// 🟢 NIVEL 6
-{
-    correcta: "Ayer fuimos al zoológico con mi familia.",
-    opciones: [
-        "Ayer fuimos al zoologico con mi familia.",
-        "Ayer fuimos al zoológico con mi familia.",
-        "ayer fuimos al zoológico con mi familia."
-    ]
-},
-
-// 🟢 NIVEL 7
-{
-    correcta: "La profesora explica la lección de lenguaje.",
-    opciones: [
-        "La profesora explica la leccion de lenguaje.",
-        "La profesora explica la lección de lenguaje.",
-        "la profesora explica la lección de lenguaje."
-    ]
-},
-
-// 🟢 NIVEL 8 (avanzado)
-{
-    correcta: "Los estudiantes leen cuentos interesantes en la biblioteca.",
-    opciones: [
-        "Los estudiantes leen cuentos interesantes en la biblioteca.",
-        "Los estudiantes leen cuentos interesante en la biblioteca.",
-        "los estudiantes leen cuentos interesantes en la biblioteca."
-    ]
+    opciones: ["El perro negro corre rápidamente por el parque.","El perro negro corre rapidamente por el parque.","el perro negro corre rápidamente por el parque."]
 }
-
 ];
+
 let i = 0;
 let puntos = 0;
 let estrellas = 0;
 let vidas = 3;
 let tiempo = 20;
 let timer;
+let gameOver = false;
 
-/* ⏱️ TIMER ULTRA PRO */
+/* TIMER */
 function iniciarTiempo(){
 
     clearInterval(timer);
     tiempo = 20;
 
     document.getElementById("barra").style.width = "100%";
-    document.getElementById("barra").style.background =
-        "linear-gradient(90deg,#00e5ff,#2979ff)";
 
     timer = setInterval(() => {
+
+        if(gameOver) return;
 
         tiempo--;
 
@@ -255,22 +197,23 @@ function iniciarTiempo(){
 /* CARGAR */
 function cargar(){
 
+    if(gameOver) return;
+
     if(i >= preguntas.length){
         document.getElementById("nivel").innerText = "🎉 ¡GANASTE!";
         document.getElementById("opciones").innerHTML = "";
         document.getElementById("mensaje").innerText =
         `🏆 ${puntos} puntos | ⭐ ${estrellas}`;
+        gameOver = true;
         return;
     }
 
-    document.getElementById("nivel").innerText =
-    "Nivel " + (i + 1);
+    document.getElementById("nivel").innerText = "Nivel " + (i + 1);
 
     let cont = document.getElementById("opciones");
     cont.innerHTML = "";
 
-    let op = [...preguntas[i].opciones]
-    .sort(() => Math.random() - 0.5);
+    let op = [...preguntas[i].opciones].sort(() => Math.random() - 0.5);
 
     op.forEach(o => {
         let btn = document.createElement("button");
@@ -283,13 +226,13 @@ function cargar(){
 }
 
 /* CHECK */
-
 function check(opcion){
+
+    if(gameOver) return;
 
     clearInterval(timer);
 
     let msg = document.getElementById("mensaje");
-
     let bonus = tiempo > 15 ? 5 : 0;
 
     if(opcion === preguntas[i].correcta){
@@ -305,7 +248,8 @@ function check(opcion){
 
         actualizar();
 
-        i++; // SOLO AVANZA SI ESTÁ CORRECTO
+        i++;
+
         setTimeout(cargar, 1200);
 
     } else {
@@ -315,28 +259,39 @@ function check(opcion){
 
         sonidoBad.play();
 
-        perderVida(); // 👈 NO AVANZA NIVEL
+        let terminado = perderVida();
 
-        actualizar();
-
-        // 🔥 SIGUE EN LA MISMA PREGUNTA
-        setTimeout(cargar, 1200);
+        if(!terminado){
+            setTimeout(cargar, 1200);
+        }
     }
 }
+
 /* VIDAS */
 function perderVida(){
 
     vidas--;
-
     actualizar();
 
     if(vidas <= 0){
-        document.getElementById("opciones").innerHTML = "";
-        document.getElementById("mensaje").innerText =
-        "💀 GAME OVER";
+
+        gameOver = true;
         clearInterval(timer);
+
+        document.getElementById("nivel").innerText = "💀 GAME OVER";
+        document.getElementById("opciones").innerHTML = "";
+
+        document.getElementById("mensaje").innerHTML =
+        `Perdiste todas las vidas.<br>🏆 Puntos: ${puntos}<br>⭐ Estrellas: ${estrellas}`;
+
+        hablar("Juego terminado");
+
+        return true;
     }
+
+    return false;
 }
+
 /* HUD */
 function actualizar(){
     document.getElementById("puntos").innerText = puntos;
