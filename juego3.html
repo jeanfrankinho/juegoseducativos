@@ -1,1 +1,149 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ordena la Oración</title>
+
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    text-align:center;
+    background:linear-gradient(to right,#4facfe,#00f2fe);
+    padding-top:50px;
+}
+
+.caja{
+    background:white;
+    width:80%;
+    max-width:600px;
+    margin:auto;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 0 15px rgba(0,0,0,0.3);
+}
+
+h1{
+    color:#1565c0;
+}
+
+.palabras{
+    font-size:24px;
+    font-weight:bold;
+    color:#e65100;
+    margin:20px 0;
+}
+
+input{
+    width:80%;
+    padding:12px;
+    font-size:18px;
+    border-radius:10px;
+    border:2px solid #ccc;
+}
+
+button{
+    margin-top:15px;
+    padding:12px 25px;
+    font-size:18px;
+    border:none;
+    border-radius:10px;
+    background:#4caf50;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#388e3c;
+}
+
+#resultado{
+    margin-top:20px;
+    font-size:24px;
+    font-weight:bold;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="caja">
+
+<h1>🧩 Ordena la Oración</h1>
+
+<p>Ordena correctamente las siguientes palabras:</p>
+
+<div class="palabras">
+parque - juega - Pedro - el - en
+</div>
+
+<input type="text" id="respuesta"
+placeholder="Escribe la oración correcta">
+
+<br>
+
+<button onclick="verificar()">
+Verificar
+</button>
+
+<p id="resultado"></p>
+
+</div>
+
+<script>
+
+function verificar(){
+
+    let respuesta =
+    document.getElementById("respuesta")
+    .value
+    .trim()
+    .toLowerCase();
+
+    let correcta =
+    "pedro juega en el parque";
+
+    if(respuesta === correcta){
+
+        document.getElementById("resultado")
+        .innerHTML = "✅ ¡Correcto!";
+
+        document.getElementById("resultado")
+        .style.color = "green";
+
+        hablar("Excelente. La oración está correcta.");
+
+    }else{
+
+        document.getElementById("resultado")
+        .innerHTML = "❌ Intenta nuevamente";
+
+        document.getElementById("resultado")
+        .style.color = "red";
+
+        hablar("La respuesta no es correcta.");
+
+    }
+
+}
+
+function hablar(texto){
+
+    let voz =
+    new SpeechSynthesisUtterance(texto);
+
+    voz.lang = "es-CL";
+
+    speechSynthesis.speak(voz);
+
+}
+
+</script>
+
+</body>
+</html>
+```
 
