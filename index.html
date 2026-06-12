@@ -82,6 +82,32 @@
             left: 0;
             pointer-events: none;
         }
+        body{
+    font-family: Arial, sans-serif;
+    background:
+        radial-gradient(circle at top left, rgba(0,255,255,0.3), transparent 40%),
+        radial-gradient(circle at bottom right, rgba(255,0,255,0.3), transparent 40%),
+        linear-gradient(135deg, #050816, #0a0f2c, #111827);
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+.login-container{
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    width: 450px;
+    box-shadow: 0 0 30px rgba(0,255,255,0.4);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+}
     </style>
 </head>
 
@@ -109,9 +135,6 @@
         <button onclick="irCuartoBasico()">
         📚 4° Básico
         </button>
-        <button onclick="irTodos()">
-📖 Todos los Juegos
-</button>
     </div>
 
     <!-- Librería serpentinas -->
@@ -187,14 +210,11 @@
         window.location.href = "juego2.html";
 
 }
-    function irTodos(){
-
-    window.location.href = "todos.html";
-
-}
+    
     </script>
     
 
 </body>
 
 </html>
+
