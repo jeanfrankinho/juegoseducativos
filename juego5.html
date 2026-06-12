@@ -135,8 +135,8 @@ button:hover {
 const sonidoOk = new Audio("https://www.myinstants.com/media/sounds/success-fanfare-trumpets.mp3");
 const sonidoBad = new Audio("https://www.myinstants.com/media/sounds/wrong-answer-sound-effect.mp3");
 
-/* PREGUNTAS */
 const preguntas = [
+
 {
     correcta: "María fue al parque a jugar.",
     opciones: [
@@ -145,6 +145,7 @@ const preguntas = [
         "María fue al parque a jugar"
     ]
 },
+
 {
     correcta: "¿Dónde está mi mochila?",
     opciones: [
@@ -153,6 +154,7 @@ const preguntas = [
         "¿Donde esta mi mochila?"
     ]
 },
+
 {
     correcta: "Los niños estudian matemáticas.",
     opciones: [
@@ -160,9 +162,58 @@ const preguntas = [
         "los niños estudian matemáticas.",
         "Los niños estudian matemáticas."
     ]
-}
-];
+},
 
+{
+    correcta: "¡Qué hermoso día hace hoy!",
+    opciones: [
+        "Que hermoso día hace hoy!",
+        "¡Qué hermoso día hace hoy!",
+        "¡Que hermoso dia hace hoy!"
+    ]
+},
+
+// 🟢 NIVEL 5 (más difícil)
+{
+    correcta: "El perro negro corre rápidamente por el parque.",
+    opciones: [
+        "El perro negro corre rápidamente por el parque.",
+        "El perro negro corre rapidamente por el parque.",
+        "el perro negro corre rápidamente por el parque."
+    ]
+},
+
+// 🟢 NIVEL 6
+{
+    correcta: "Ayer fuimos al zoológico con mi familia.",
+    opciones: [
+        "Ayer fuimos al zoologico con mi familia.",
+        "Ayer fuimos al zoológico con mi familia.",
+        "ayer fuimos al zoológico con mi familia."
+    ]
+},
+
+// 🟢 NIVEL 7
+{
+    correcta: "La profesora explica la lección de lenguaje.",
+    opciones: [
+        "La profesora explica la leccion de lenguaje.",
+        "La profesora explica la lección de lenguaje.",
+        "la profesora explica la lección de lenguaje."
+    ]
+},
+
+// 🟢 NIVEL 8 (avanzado)
+{
+    correcta: "Los estudiantes leen cuentos interesantes en la biblioteca.",
+    opciones: [
+        "Los estudiantes leen cuentos interesantes en la biblioteca.",
+        "Los estudiantes leen cuentos interesante en la biblioteca.",
+        "los estudiantes leen cuentos interesantes en la biblioteca."
+    ]
+}
+
+];
 let i = 0;
 let puntos = 0;
 let estrellas = 0;
