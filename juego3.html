@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ordena la Oración</title>
+<title>Ordena la Oración - Niveles</title>
 
 <style>
 body{
@@ -36,7 +36,6 @@ body{
 
 h1{
     color:#00ffff;
-    text-shadow:0 0 10px #00ffff;
 }
 
 .contenedor-palabras, .zona{
@@ -64,7 +63,7 @@ h1{
 }
 
 button{
-    margin-top:15px;
+    margin-top:10px;
     padding:12px 25px;
     border:none;
     border-radius:10px;
@@ -82,21 +81,16 @@ button{
 
 <h1>🧩 Ordena la Oración</h1>
 
-<p>Arrastra las palabras en el orden correcto</p>
+<h2 id="nivel">Nivel 1</h2>
 
-<!-- PALABRAS DESORDENADAS -->
-<div class="contenedor-palabras" id="palabras">
-    <div class="palabra" draggable="true">Pedro</div>
-    <div class="palabra" draggable="true">juega</div>
-    <div class="palabra" draggable="true">en</div>
-    <div class="palabra" draggable="true">el</div>
-    <div class="palabra" draggable="true">parque</div>
-</div>
+<p id="instruccion">Arrastra las palabras en orden correcto</p>
 
-<!-- ZONA DONDE SE ORDENAN -->
+<div class="contenedor-palabras" id="palabras"></div>
+
 <div class="zona" id="zona"></div>
 
 <button onclick="verificar()">Verificar</button>
+<button onclick="siguienteNivel()">Siguiente nivel</button>
 
 <p id="resultado"></p>
 
@@ -104,22 +98,55 @@ button{
 
 <script>
 
-const palabras = document.querySelectorAll(".palabra");
+const niveles = [
+    {
+        palabras: ["Pedro","juega","en","el","parque"],
+        respuesta: "pedro juega en el parque"
+    },
+    {
+        palabras: ["La","niña","lee","un","libro"],
+        respuesta: "la niña lee un libro"
+    },
+    {
+        palabras: ["El","perro","corre","rápido"],
+        respuesta: "el perro corre rápido"
+    }
+];
+
+let nivelActual = 0;
+
 const zona = document.getElementById("zona");
+const contenedor = document.getElementById("palabras");
 
-// DRAG START
-palabras.forEach(p => {
-    p.addEventListener("dragstart", e => {
-        e.dataTransfer.setData("text", e.target.innerText);
-        e.target.style.opacity = "0.5";
+// CARGAR NIVEL
+function cargarNivel(){
+
+    zona.innerHTML = "";
+    contenedor.innerHTML = "";
+    document.getElementById("resultado").innerHTML = "";
+
+    let nivel = niveles[nivelActual];
+
+    document.getElementById("nivel").innerText = "Nivel " + (nivelActual + 1);
+
+    let palabrasMezcladas = [...nivel.palabras]
+        .sort(() => Math.random() - 0.5);
+
+    palabrasMezcladas.forEach(texto => {
+        let div = document.createElement("div");
+        div.classList.add("palabra");
+        div.draggable = true;
+        div.innerText = texto;
+
+        div.addEventListener("dragstart", e => {
+            e.dataTransfer.setData("text", texto);
+        });
+
+        contenedor.appendChild(div);
     });
+}
 
-    p.addEventListener("dragend", e => {
-        e.target.style.opacity = "1";
-    });
-});
-
-// DROP ZONE
+// DRAG & DROP
 zona.addEventListener("dragover", e => {
     e.preventDefault();
 });
@@ -129,14 +156,14 @@ zona.addEventListener("drop", e => {
 
     const texto = e.dataTransfer.getData("text");
 
-    const nueva = document.createElement("div");
-    nueva.classList.add("palabra");
-    nueva.innerText = texto;
+    let div = document.createElement("div");
+    div.classList.add("palabra");
+    div.innerText = texto;
 
-    zona.appendChild(nueva);
+    zona.appendChild(div);
 });
 
-// VERIFICAR RESPUESTA
+// VERIFICAR
 function verificar(){
 
     let orden = Array.from(zona.children)
@@ -144,14 +171,27 @@ function verificar(){
     .join(" ")
     .toLowerCase();
 
-    let correcta = "pedro juega en el parque";
+    let correcta = niveles[nivelActual].respuesta;
 
     if(orden === correcta){
         document.getElementById("resultado").innerHTML = "✅ ¡Correcto!";
-        hablar("Excelente, lo hiciste muy bien");
+        hablar("Muy bien");
     }else{
         document.getElementById("resultado").innerHTML = "❌ Intenta nuevamente";
-        hablar("Revisa el orden de la oración");
+        hablar("Revisa el orden");
+    }
+}
+
+// SIGUIENTE NIVEL
+function siguienteNivel(){
+
+    if(nivelActual < niveles.length - 1){
+        nivelActual++;
+        cargarNivel();
+    }else{
+        document.getElementById("resultado").innerHTML =
+        "🏆 Terminaste todos los niveles";
+        hablar("Felicitaciones, terminaste el juego");
     }
 }
 
@@ -161,6 +201,9 @@ function hablar(texto){
     voz.lang = "es-CL";
     speechSynthesis.speak(voz);
 }
+
+// INICIO
+cargarNivel();
 
 </script>
 
