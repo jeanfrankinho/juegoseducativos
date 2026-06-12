@@ -52,6 +52,14 @@ button:hover {
     transform: scale(1.1);
 }
 
+.btn-reiniciar{
+    background: linear-gradient(45deg, #2196F3, #0D47A1);
+}
+
+.btn-menu{
+    background: linear-gradient(45deg, #ff9800, #ff5722);
+}
+
 #result {
     font-size: 22px;
     margin-top: 20px;
@@ -79,6 +87,14 @@ button:hover {
 
     <p id="result"></p>
     <h2 id="score">Puntos: 0</h2>
+
+    <button class="btn-reiniciar" onclick="reiniciarJuego()">
+        🔄 Reiniciar Juego
+    </button>
+
+    <button class="btn-menu" onclick="irMenu()">
+        🏠 Menú Principal
+    </button>
 
 </div>
 
@@ -161,6 +177,20 @@ function checkAnswer(answer) {
     current++;
 
     setTimeout(loadQuestion, 1500);
+}
+
+function reiniciarJuego() {
+    current = 0;
+    score = 0;
+
+    document.getElementById("score").textContent = "Puntos: 0";
+    document.getElementById("result").textContent = "";
+
+    loadQuestion();
+}
+
+function irMenu() {
+    window.location.href = "menu.html";
 }
 
 loadQuestion();
